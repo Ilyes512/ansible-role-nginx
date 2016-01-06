@@ -1,7 +1,7 @@
 ---
 ansidev_package_state: present
 
-nginx_package_state: {{ ansidev_package_state }}
+nginx_package_state: "{{ ansidev_package_state }}"
 nginx_ppa: "ppa:nginx/stable"
 nginx_docroot: /vagrant/
 nginx_servername: ansidev.dev
