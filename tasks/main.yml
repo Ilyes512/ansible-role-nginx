@@ -30,6 +30,14 @@
     group: adm
     state: directory
 
+- stat:
+    path: "{{ nginx_log_folder }}/access.log"
+  register: nginx_access_log
+
+- stat:
+    path: "{{ nginx_log_folder }}/error.log"
+  register: nginx_error_log
+
 - name: Nginx | Create the access.log
   sudo: yes
   file:
@@ -37,6 +45,7 @@
     owner: www-data
     group: adm
     state: touch
+  when: not nginx_access_log.stat.exists
 
 - name: Nginx | Create the error.log
   sudo: yes
@@ -45,3 +54,4 @@
     owner: www-data
     group: adm
     state: touch
+  when: not nginx_error_log.stat.exists
