@@ -1,0 +1,47 @@
+---
+- name: Nginx | Add PPA nginx/stable
+  sudo: yes
+  apt_repository:
+    repo: "{{ nginx_ppa }}"
+    update_cache: yes
+    state: "{{ nginx_package_state }}"
+  when: nginx_ppa is defined and not (nginx_ppa is none or nginx_ppa | trim == '')
+
+- name: Nginx | Install Nginx
+  sudo: yes
+  apt:
+    pkg: nginx
+    state: "{{ nginx_package_state }}"
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Nginx | Change default Nginx site
+  sudo: yes
+  template:
+    src: default_nginx.j2
+    dest: /etc/nginx/sites-available/default
+  notify: restart nginx
+
+- name: Nginx | Create the log folder
+  sudo: yes
+  file:
+    path: "{{ nginx_log_folder }}"
+    owner: www-data
+    group: adm
+    state: directory
+
+- name: Nginx | Create the access.log
+  sudo: yes
+  file:
+    path: "{{ nginx_log_folder }}/access.log"
+    owner: www-data
+    group: adm
+    state: touch
+
+- name: Nginx | Create the error.log
+  sudo: yes
+  file:
+    path: "{{ nginx_log_folder }}/error.log"
+    owner: www-data
+    group: adm
+    state: touch
