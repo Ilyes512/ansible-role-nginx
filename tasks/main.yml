@@ -31,10 +31,12 @@
     state: directory
 
 - stat:
+  sudo: yes
     path: "{{ nginx_log_folder }}/access.log"
   register: nginx_access_log
 
 - stat:
+  sudo: yes
     path: "{{ nginx_log_folder }}/error.log"
   register: nginx_error_log
 
