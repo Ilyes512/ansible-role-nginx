@@ -34,4 +34,6 @@ server {
     location ~ /\.ht {
         deny all;
     }
+
+    client_max_body_size {{ nginx_client_max_body_size }};
 }
