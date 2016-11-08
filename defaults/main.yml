@@ -8,3 +8,4 @@ nginx_servername: ansidev.dev
 nginx_env_name: local
 nginx_log_folder: /var/log/nginx/default
 nginx_client_max_body_size: 100m
+nginx_sendfile_off: false
